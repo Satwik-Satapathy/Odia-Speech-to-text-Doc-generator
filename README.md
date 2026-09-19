@@ -25,13 +25,13 @@ Open http://127.0.0.1:8000. FastAPI serves the static frontend and the `/api` en
 
 ## Vercel
 
-The repository includes a Python serverless entrypoint in `api/index.py` and static-file routing in `vercel.json`. For Vercel Hobby compatibility, the browser polls Sarvam job status through the backend; no Vercel Cron Job is required.
+The repository uses Vercel's native convention: `api/index.py` is the Python serverless API and `public/` contains the static frontend. For Vercel Hobby compatibility, the browser polls Sarvam job status through the backend; no Vercel Cron Job is required.
 
 Set these Vercel environment variables:
 
 - `SARVAM_API_KEY`
 Keep the browser page open until the batch transcript completes. Vercel Hobby does not support frequent Cron Jobs, so closing the page stops status polling. The current SQLite repository is suitable for a personal, low-volume deployment only; Vercel functions have ephemeral filesystems, so documents and jobs are not guaranteed to survive across instances or redeployments. This design deliberately uses no external storage and limits audio uploads to 4 MB.
 
-Deploy from the repository root with the Vercel dashboard or `vercel` CLI. No Node.js build step is required for the application runtime.
+Deploy from the repository root with the Vercel dashboard or `vercel` CLI. No Node.js build step is required for the application runtime. Vercel installs Python dependencies from the root `requirements.txt`.
 
-If Vercel previously showed `404 NOT_FOUND` at the deployment URL, redeploy after this change. The static app is served from `public/`, and the API is served from `api/index.py`; make sure the Vercel project root is the repository root, not `backend/` or `frontend/`.
+If Vercel previously showed `404 NOT_FOUND` at the deployment URL, redeploy after this change. The static app is served from `public/`, and the API is served from `api/index.py`; make sure the Vercel project root is the repository root, not `backend/` or `frontend/`. Do not add a custom Framework Preset, Build Command, Output Directory, or `vercel.json` override.
