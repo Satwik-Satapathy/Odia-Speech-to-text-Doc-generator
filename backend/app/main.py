@@ -327,7 +327,11 @@ def get_job(
             poll_external_batch(job_id)
             row = database.get_job(job_id) or row
         except Exception as error:
-            logger.error("client_poll_failed job_id=%s message=%s", job_id, safe_error(error))
+            message = safe_error(error)
+            database.update_job(job_id, state="failed", error_message=message)
+            database.audit("batch_poll_failed", row["document_id"], job_id, message=message)
+            logger.error("client_poll_failed job_id=%s message=%s", job_id, message)
+            row = database.get_job(job_id) or row
     return {
         "state": row["state"], "progress": row["progress"], "transcript": database.get_document_content(row["document_id"]),
         "segments": database.get_segments(job_id), "error_message": row["error_message"], "external_job_id": row["external_job_id"],
