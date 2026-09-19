@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="or">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3efe6" />
+    <title>Odia Voice Papers</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand-mark">ଓ</div>
+        <div><p class="eyebrow">ODIA VOICE PAPERS</p><h1>କଥାରୁ ଦଲିଲ୍</h1></div>
+        <div class="topbar-status"><span class="status-dot"></span> Batch mode · 10 min / 4 MB</div>
+      </header>
+      <section class="workspace">
+        <aside class="control-panel">
+          <div class="panel-kicker">01 / CAPTURE</div>
+          <h2>ଏକ ନୂଆ ସେସନ୍ ଆରମ୍ଭ କରନ୍ତୁ</h2>
+          <p class="muted">WebM/Opus ରେକର୍ଡିଂ 48 kbps ରେ ପ୍ରସ୍ତୁତ ହୋଇ Sarvam Batch API କୁ ଯିବ। ସୀମା: 10 ମିନିଟ୍, 4 MB।</p>
+          <label class="field-label" for="title">ଦଲିଲ୍ ନାମ</label>
+          <input id="title" value="ନୂଆ ଭଏସ୍ ନୋଟ୍" />
+          <div class="capture-actions">
+            <label class="upload-button"><span>↑</span> ଅଡିଓ ବାଛନ୍ତୁ<input id="file-input" type="file" accept=".webm,.ogg,.opus,.mp3,.wav,.aac,.flac,.m4a,.mp4,audio/webm,audio/ogg,audio/mpeg,audio/wav,audio/aac,audio/flac,audio/mp4" /></label>
+            <button id="record-button" class="record-button"><span>●</span> ରେକର୍ଡ କରନ୍ତୁ</button>
+          </div>
+          <div id="file-pill" class="file-pill hidden"></div>
+          <button id="submit-button" class="primary-button" disabled>Batch transcription ଆରମ୍ଭ କରନ୍ତୁ <span>→</span></button>
+          <button id="sample-button" class="sample-button">ନମୁନା ଡକ୍ୟୁମେଣ୍ଟ ଦେଖନ୍ତୁ</button>
+          <div class="job-card"><div class="job-card-head"><span class="panel-kicker">JOB STATUS</span><span id="job-state" class="job-state">idle</span></div><p id="job-message">10 ମିନିଟ୍ ମଧ୍ୟରେ ଏକ ଅଡିଓ ସେସନ୍ ଅପଲୋଡ୍ କରନ୍ତୁ</p><div id="progress-wrap" class="progress-track hidden"><div id="progress-bar"></div></div><small id="job-id">ପ୍ରସ୍ତୁତ</small><button id="retry-button" class="sample-button hidden">ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ</button></div>
+        </aside>
+        <section class="editor-panel">
+          <div class="editor-header"><div><div class="panel-kicker">02 / EDITOR</div><h2 id="document-title">ନୂଆ ଭଏସ୍ ନୋଟ୍</h2></div><div class="export-actions"><button data-format="docx">Download DOCX ↓</button><button data-format="md">Download MD ↓</button><button data-format="txt">Download TXT ↓</button></div></div>
+          <div class="editor-toolbar"><span>ଓଡ଼ିଆ</span><span class="toolbar-divider"></span><button>¶</button><button>◌</button><input id="segment-search" class="segment-search" placeholder="Search segments" /><span id="segment-count" class="toolbar-note">No transcript yet</span></div>
+          <div id="segment-list" class="segment-list"></div>
+          <textarea id="document-editor" class="document-editor" placeholder="ଆପଣଙ୍କ ଟ୍ରାନ୍ସକ୍ରିପ୍ଟ ଏଠାରେ ଦେଖାଯିବ..." spellcheck="false"></textarea>
+          <div class="editor-footer"><span id="character-count">0 characters</span><span id="save-state">Waiting for transcript</span></div>
+        </section>
+      </section>
+      <footer><span>Built for careful Odia transcription</span><span>Phase 1–4 foundation · deployment later</span></footer>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "odia-clean-monologue-001",
+    "description": "Clean Odia single-speaker sample with names and numbers",
+    "audio_path": "quality/audio/odia-clean-monologue-001.wav",
+    "reference_transcript": "ଆଜି ଭୁବନେଶ୍ୱରରେ ତାପମାତ୍ରା ତିରିଶି ଡିଗ୍ରୀ ଅଛି।"
+  },
+  {
+    "id": "odia-code-mix-001",
+    "description": "Odia and English code-mixed sample",
+    "audio_path": "quality/audio/odia-code-mix-001.wav",
+    "reference_transcript": "ଆମେ ଆସନ୍ତାକାଲି meeting ପାଇଁ ଏକ agenda ପ୍ରସ୍ତୁତ କରିବା।"
+  }
+]
