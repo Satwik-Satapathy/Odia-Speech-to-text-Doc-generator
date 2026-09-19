@@ -7,7 +7,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-DATABASE_PATH = Path(os.getenv("DATABASE_PATH", str(Path(__file__).resolve().parents[1] / "data" / "app.db")))
+local_database_path = str(Path(__file__).resolve().parents[1] / "data" / "app.db")
+configured_database_path = os.getenv("DATABASE_PATH")
+
+# Vercel's deployed bundle is read-only. `/tmp` is writable but ephemeral.
+if os.getenv("VERCEL"):
+    DATABASE_PATH = Path(
+        configured_database_path
+        if configured_database_path and configured_database_path.startswith("/tmp/")
+        else "/tmp/odia-voice.db"
+    )
+else:
+    DATABASE_PATH = Path(configured_database_path or local_database_path)
 
 
 def now() -> str:
