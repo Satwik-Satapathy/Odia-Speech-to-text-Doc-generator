@@ -6,7 +6,6 @@ import os
 import tempfile
 import time
 import uuid
-import zipfile
 from io import BytesIO
 from pathlib import Path
 from typing import Any, Literal
@@ -163,7 +162,7 @@ def fetch_remote_batch_status(external_job_id: str) -> tuple[str, dict[str, Any]
             return "running", status, None
         if state == "failed":
             return "failed", status, None
-        if state != "completed":
+        if state not in {"completed", "partially_completed"}:
             return state or "unknown", status, None
         output_names = [
             output.get("file_name")
@@ -176,9 +175,17 @@ def fetch_remote_batch_status(external_job_id: str) -> tuple[str, dict[str, Any]
         download_url = f"{SARVAM_BASE_URL}/speech-to-text/job/v1/download-files"
         download = client.post(download_url, headers=headers, json={"job_id": external_job_id, "files": output_names})
         download.raise_for_status()
-        with zipfile.ZipFile(BytesIO(download.content)) as archive:
-            json_name = next(name for name in archive.namelist() if name.endswith(".json"))
-            raw_result = json.loads(archive.read(json_name).decode("utf-8"))
+        download_payload = download.json()
+        download_urls = download_payload.get("download_urls", {})
+        if not download_urls:
+            raise RuntimeError("Sarvam returned no transcript download URL")
+        first_output = next(iter(download_urls.values()))
+        file_url = first_output.get("file_url") if isinstance(first_output, dict) else first_output
+        if not file_url:
+            raise RuntimeError("Sarvam returned an invalid transcript download URL")
+        result_file = client.get(file_url)
+        result_file.raise_for_status()
+        raw_result = result_file.json()
         return "completed", status, raw_result
 
 
